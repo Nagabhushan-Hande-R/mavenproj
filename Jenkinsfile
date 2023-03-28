@@ -35,7 +35,6 @@ pipeline
     	always
     	{
     		emailext body: 'Summary', subject: 'Pipeline Status', to: '2022sp93055@wilp.bits-pilani.ac.in'
-'
     	}
 
     }
