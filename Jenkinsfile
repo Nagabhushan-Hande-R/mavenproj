@@ -1,34 +1,44 @@
 pipeline 
 {
     agent any
-
-    stages 
-    {
-        stage('Build') 
-        {
-            steps 
-            {
-                echo 'Build App'
-            }
+    tools { 
+       maven 'Maven 3.9.1'
+       jdk 'jdk 17' 
+    }
+    stages { 
+      stage('Initialize') { 
+        steps { 
+           bat ' ' '
+               echo "PATH = ${PATH}" 
+               echo "JAVA_HOME" = ${JAVA_HOME}  
+               echo "MAVEN_HOME = ${MAVEN_HOME}"
+             ' ' '
+               }
         }
-
-        stage('Test') 
-        {
-            steps 
-            {
-                echo 'Test App'
-            }
+        stage('Build') {
+          steps { 
+            echo 'BUILD'
+            bat 'mvn clean install -DskipTests=true' 
+           } 
+        } 
+        stage('Test') {
+          steps { 
+            echo 'TEST'
+            bat 'mvn test'
+          } 
         }
-
-        stage('Deploy') 
-        {
-            steps 
-            {
-                echo 'Deploy App'
-            }
+        stage('Package') { 
+          steps { 
+            echo 'PACKAGE' 
+            bat 'mvn package'
+          }
+        }
+        stage('Deploy') {
+          steps { 
+            echo 'DEPLOY' 
+          }
         }
     }
-
     post
     {
 
